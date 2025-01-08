@@ -85,7 +85,7 @@ class ProfilSerializer(serializers.Serializer):
 
 class UstawieniaSerializer(serializers.Serializer):
     osoba = serializers.PrimaryKeyRelatedField(queryset=Osoba.objects.all())
-    motyw_kolor = serializers.CharField(max_length=10, default='light')
+    motyw_kolor = serializers.CharField(max_length=10,default='light')
   
 
     def create(self, validated_data):
