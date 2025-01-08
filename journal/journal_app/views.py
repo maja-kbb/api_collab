@@ -59,7 +59,6 @@ def osoba_filter(request, substring):
 
 
 def osoba_list_html(request):
-    # pobieramy wszystkie obiekty Person z bazy poprzez QuerySet
     osoby = Osoba.objects.all()
     return render(request,
                   "journal_app/osoba/list.html",

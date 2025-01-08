@@ -8,5 +8,4 @@ urlpatterns = [
     path('osoby/filtrowane/<str:substring>/', views.osoba_filter, name='osoba-filter'),
     path('osoby_html/', views.osoba_list_html, name = 'osoba-list-html'),
     path('osoby_html/<int:id>/', views.osoba_detail_html, name = 'osoba-detail-html'),
-
 ]

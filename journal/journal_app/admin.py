@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+# Register your models here
 from .models import Osoba, Profil, Wpis, Ustawienia
 
 admin.site.register(Osoba)

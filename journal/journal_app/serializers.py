@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Osoba, Wpis, User, Ustawienia, Profil
-from datetime import date
 from django.core.validators import FileExtensionValidator
 
 class OsobaSerializer(serializers.Serializer):
