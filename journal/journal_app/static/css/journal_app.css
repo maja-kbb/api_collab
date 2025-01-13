@@ -1,0 +1,19 @@
+
+body {
+    margin: 25px;
+    background-color: rgba(240, 162, 250, 0.812);
+    font-family: arial, serif;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+
+  h1 {
+    font-size: 35px;
+    font-weight: normal;
+    margin-top: 5px;
+  }
+  
+
+  #header { color: rgb(255, 255, 255); }
+  #content {color: rgb(77, 16, 82)}

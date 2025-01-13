@@ -3,7 +3,7 @@
 {% block title %}Lista obiektów Osoba{% endblock %}
 
 {% block content %}
-Aktualnie w mojej bazie dodane są poniższe obiekty typu Osoba.
+<b><h3>Aktualnie w mojej bazie dodane są poniższe obiekty typu Osoba.</h3></b>
 {% for osoba in osoby %}
 <p>User: {{ osoba.user }}</p>
 <p>Osoba: {{ osoba.imie }} {{ osoba.nazwisko }}</p>
