@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponse
+from django.contrib.auth.decorators import permission_required
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .models import Osoba, Profil, Wpis, Ustawienia
 from .serializers import OsobaSerializer, ProfilSerializer, WpisSerializer, UstawieniaSerializer
 # Create your views here.
@@ -21,31 +24,49 @@ def osoba_list(request):
 
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@permission_required('journal_app.view_osoba')
 def osoba_detail(request, pk):
-
-
     try:
         osoba = Osoba.objects.get(pk=pk)
     except Osoba.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    """
-    Szczegóły pojedynczego obiektu Osoba.
-    """
-    if request.method == 'GET':
-        osoba = Osoba.objects.get(pk=pk)
-        serializer = OsobaSerializer(osoba)
-        return Response(serializer.data)
+@api_view(['PUT'])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
+@permission_classes([IsAuthenticated])
+def osoba_update(request, pk):
 
-    elif request.method == 'PUT':
+    """
+    :param request: obiekt DRF Request
+    :param pk: id obiektu Osoba
+    :return: Response (with status and/or object/s data)
+    """
+    try:
+        osoba = Osoba.objects.get(pk=pk)
+    except Osoba.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
         serializer = OsobaSerializer(osoba, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
+   
+@api_view(['DELETE'])    
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def osoba_delete(request, pk):
+    try:
+        osoba = Osoba.objects.get(pk=pk)
+    except Osoba.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    if request.method == 'DELETE':
         osoba.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
