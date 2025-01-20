@@ -145,6 +145,3 @@ def osoba_view(request):
 
     return render(request, 'osoba_list.html', {'osoby': osoby})
 
-urlpatterns = [
-    path('osoby/', views.osoba_view, name='osoby-list'),
-]
