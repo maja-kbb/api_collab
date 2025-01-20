@@ -1,5 +1,7 @@
 from django.urls import path, include
 from . import views
+from .views import ProtectedView
+from .views import StanowiskoMembersView
 
 urlpatterns = [
     
@@ -8,4 +10,6 @@ urlpatterns = [
     path('osoby/filtrowane/<str:substring>/', views.osoba_filter, name='osoba-filter'),
     path('osoby_html/', views.osoba_list_html, name = 'osoba-list-html'),
     path('osoby_html/<int:id>/', views.osoba_detail_html, name = 'osoba-detail-html'),
+    path('protected/', ProtectedView.as_view(), name='protected'),
+    path('stanowisko/<int:stanowisko_id>/members/', StanowiskoMembersView.as_view()),
 ]

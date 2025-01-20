@@ -75,3 +75,76 @@ def osoba_detail_html(request, id):
     return render(request,
                   "journal_app/osoba/detail.html",
                   {'osoba': osoba})
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from .serializers import OsobaSerializer
+from rest_framework.generics import ListAPIView
+from .models import Osoba
+from rest_framework.generics import UpdateAPIView, DestroyAPIView
+from .models import Stanowisko, Osoba
+
+class OsobaCreateView(APIView):
+    def post(self, request):
+        serializer = OsobaSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(właściciel=request.user)  # Dodanie właściciela
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class OsobaUpdateView(UpdateAPIView):
+    queryset = Osoba.objects.all()
+    serializer_class = OsobaSerializer
+    permission_classes = [IsAuthenticated]
+
+class ProtectedView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = OsobaSerializer
+
+class OsobaDeleteView(DestroyAPIView):
+    queryset = Osoba.objects.all()
+    permission_classes = [IsAuthenticated]
+
+class StanowiskoMembersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+
+    def get(self, request):
+        return Response({"message": "Hello, authenticated user!"})
+    
+    def get_queryset(self):
+        return Osoba.objects.filter(właściciel=self.request.user)
+        return super().get_queryset().filter(właściciel=self.request.user)
+
+    def get(self, request, stanowisko_id):
+        try:
+            stanowisko = Stanowisko.objects.get(pk=stanowisko_id)
+            members = stanowisko.osoby_set.all()
+            serializer = OsobaSerializer(members, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Stanowisko.DoesNotExist:
+            return Response({"error": "Stanowisko not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+from django.contrib.auth.decorators import permission_required
+from django.shortcuts import render
+from django.http import HttpResponseForbidden
+from django.urls import path
+from . import views
+
+
+@permission_required('app_name.view_osoba', raise_exception=True)
+def osoba_view(request):
+    # Twoja logika widoku
+    return render(request, 'osoba_list.html')
+    if request.user.has_perm('app_name.can_view_other_persons'):
+        osoby = Osoba.objects.exclude(owner=request.user)
+    else:
+        osoby = Osoba.objects.filter(owner=request.user)
+
+    return render(request, 'osoba_list.html', {'osoby': osoby})
+
+urlpatterns = [
+    path('osoby/', views.osoba_view, name='osoby-list'),
+]

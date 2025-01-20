@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 
+
 # Create your models here
 class Osoba(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='osoba')
@@ -66,3 +67,12 @@ class Wpis(models.Model):
 
     def __str__(self):
         return f"Wpis: {self.tytul} ({self.autor.user})"
+
+class Osoba(models.Model):
+    name = models.CharField(max_length=100)
+    owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+
+class Meta:
+        permissions = [
+            ("can_view_other_persons", "Can view other persons"),
+        ]
