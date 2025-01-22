@@ -3,7 +3,7 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #d7a9e0;
-  margin: 0;
+  margin-top: 90px;
   padding: 0;
   display: flex;
   justify-content: left;
@@ -19,14 +19,14 @@ body {
 }
 
 header {
-  background-color: #4CAF50;
-  color: white;
+  background-color: transparent;
+  color: transparent;
   padding: 1rem 2rem;
   text-align: left;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
 }
 
 header nav {
@@ -47,9 +47,19 @@ header nav a:hover {
   color: #cce5d0;
 }
 
+
+.content {
+  margin: 40px 20px 20px 20px; /* Dodajemy większy margines górny */
+  padding: 20px;
+  background-color: #f5c2ff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
 .header-logo {
   background-color: transparent; 
-  box-shadow: none; 
+  box-shadow: none !important; 
   border: none; 
   width: 150px;  
   height: 120px; 
@@ -60,13 +70,10 @@ header nav a:hover {
   justify-content: center;     
   align-items: center;         
   height: 100px;               
-  background-color: white;     
+  background-color: transparent;     
   border-bottom: 1px solid #ddd; 
   position: fixed;            
-  top: 0;                     
-  left: 0;
-  width: 100%;                 
-  z-index: 1000;               
+  width: 10%;                                
 }
 
 .profile-card {
@@ -85,12 +92,12 @@ header nav a:hover {
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
-  border: 3px solid #4CAF50;
+  border: 3px solid transparent;
 }
 
 .profile-card h2 {
   margin: 0.5rem 0;
-  color: #4CAF50;
+  color: transparent;
 }
 
 .profile-card p {
@@ -103,7 +110,7 @@ header nav a:hover {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
+  background-color: transparent;
   color: white;
   text-decoration: none;
   border-radius: 4px;
@@ -112,7 +119,7 @@ header nav a:hover {
 }
 
 .profile-card a:hover {
-  background-color: #45a049;
+  background-color: transparent;
 }
 
 .profile-link {
