@@ -41,7 +41,7 @@ class WpisSerializer(serializers.Serializer):
     data_utworzenia = serializers.DateTimeField()
     data_aktualizacji = serializers.DateTimeField()
     upl_img = serializers.ImageField()
-    upl_mov = serializers.FileField(validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
+
 
 
     def create(self, validated_data):

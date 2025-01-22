@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse, HttpResponseForbidden
 from rest_framework import status
 from rest_framework.response import Response
@@ -11,6 +11,7 @@ from rest_framework import status
 from rest_framework.generics import UpdateAPIView, DestroyAPIView, ListAPIView
 from django.contrib.auth.decorators import permission_required, login_required
 from . import views
+from .forms import DodajWpis
 
 @api_view(['GET'])
 def osoba_list(request):
@@ -68,6 +69,28 @@ def profil_user(request):
     profil = Profil.objects.get(osoba=osoba)
     return render(request, 'journal_app/profil_user.html', {'osoba': osoba, 'profil': profil})
 
+
+@login_required
+def home_page(request):
+    osoba = Osoba.objects.get(user=request.user)
+    profil = Profil.objects.get(osoba=osoba)
+    wpisy = Wpis.objects.filter(autor = osoba)
+    return render(request, 'journal_app/home_page.html', {'osoba': osoba, 'profil':profil, 'wpisy':wpisy})
+
+
+
+def dodaj_wpis(request):
+    if request.method == 'POST':
+        form = DodajWpis(request.POST, request.FILES)
+        if form.is_valid():
+            osoba = Osoba.objects.get(user=request.user)
+            wpis = form.save(commit=False)
+            wpis.autor = osoba  
+            wpis.save()
+            return redirect('home-page')  
+    else:
+        form = DodajWpis()
+    return render(request, 'journal_app/dodaj_wpis.html', {'form': form})
 
 
 def osoba_list_html(request):

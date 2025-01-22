@@ -1,24 +1,28 @@
 
-
+/* ogolny wyglad*/
 body {
   font-family: Arial, sans-serif;
-  background-color: #aa85b1;
+  background-color: #d7a9e0;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  text-align: left;
   align-items: center;
   height: 100vh;
   flex-direction: column;
 }
 
-
+.h1 {
+  text-align: left !important; 
+  margin-left: 0;   
+}
 
 header {
   background-color: #4CAF50;
   color: white;
   padding: 1rem 2rem;
-  text-align: center;
+  text-align: left;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -43,15 +47,36 @@ header nav a:hover {
   color: #cce5d0;
 }
 
-/* Karty profilu */
+.header-logo {
+  background-color: transparent; 
+  box-shadow: none; 
+  border: none; 
+  width: 150px;  
+  height: 120px; 
+}
+
+.header {
+  display: flex;              
+  justify-content: center;     
+  align-items: center;         
+  height: 100px;               
+  background-color: white;     
+  border-bottom: 1px solid #ddd; 
+  position: fixed;            
+  top: 0;                     
+  left: 0;
+  width: 100%;                 
+  z-index: 1000;               
+}
+
 .profile-card {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  max-width: 1000px;
   margin: 2rem auto;
   padding: 1.5rem;
-  text-align: center;
+  text-align: left;
 }
 
 .profile-card img {
@@ -90,7 +115,95 @@ header nav a:hover {
   background-color: #45a049;
 }
 
-/* Formularze */
+.profile-link {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  background-color: #d48ff8; 
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.profile-link:hover {
+  background-color: #55266a; 
+}
+
+
+.login-container form {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%; 
+}
+
+.login-container form input[type="text"],
+.login-container form input[type="password"] {
+  width: 300px; 
+  padding: 10px; 
+  margin-bottom: 15px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  box-sizing: border-box; 
+}
+
+
+.login-container form button {
+  width: 150px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  text-align: center; 
+}
+
+/*rzeczy do postow*/
+.wpis {
+  text-align: left;
+  border: 1px solid #ddd;
+  width: 95%;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wpis h2 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+.wpis h1{
+  margin-bottom: 0.5rem;
+  color:#3d0947;
+}
+.wpis p {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.wpis-image {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.wpis-image img {
+  max-width: 100%; 
+  height: auto; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
 form {
   background-color: white;
   border-radius: 8px;
@@ -138,7 +251,7 @@ form button:hover {
   background-color: #45a049;
 }
 
-/* Tabela */
+
 .table-container {
   margin: 2rem auto;
   max-width: 800px;
@@ -169,31 +282,32 @@ table tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Przyciski */
-button {
-  padding: 0.8rem 1.5rem;
-  background-color: #4CAF50;
+
+.button {
+  padding: 0.8rem 1rem;
+  background-color: #a057ca;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #45a049;
+.button:hover {
+  background-color: #592e71;
 }
 
-.button-secondary {
+.button-red {
   background-color: #f44336;
 }
 
-.button-secondary:hover {
+.button-red:hover {
   background-color: #e53935;
 }
 
-/* Responsywność */
+
 @media (max-width: 768px) {
   header nav {
       flex-direction: column;

@@ -62,8 +62,6 @@ class Wpis(models.Model):
     data_utworzenia = models.DateTimeField(auto_now_add=True)
     data_aktualizacji = models.DateTimeField(auto_now=True)
     upl_img = models.ImageField(upload_to='imgs_uploaded', null = True, blank = True)
-    upl_mov = models.FileField(upload_to='vids_uploaded', null = True, blank = True,
-        validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
 
     def __str__(self):
         return f"Wpis: {self.tytul} ({self.autor.user})"

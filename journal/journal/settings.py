@@ -76,8 +76,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'journal.wsgi.application'
 
-LOGIN_REDIRECT_URL = '/journal_app/profil/'
-LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_REDIRECT_URL = '/journal_app/home/'
+LOGOUT_REDIRECT_URL = '/journal_app/logout/'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

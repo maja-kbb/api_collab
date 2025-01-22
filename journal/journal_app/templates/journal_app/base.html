@@ -4,12 +4,13 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="{% static 'css/journal_app.css' %}">
+        <title>Journal</title>
     </head>
     <body>
-        <div id="header" >
-            <h1>Journal</h1>
-        </div>
-        <div id="content">
+        <header class="header">
+        
+            <img src="{% static 'images/logo.png' %}" alt="Journal Logo" class="header-logo">
+        </header>
             {% block content %}
             {% endblock %}
         </div>

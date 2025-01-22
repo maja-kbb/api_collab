@@ -4,16 +4,7 @@
 
 {% block content %}
   <h2>Profil użytkownika</h2>
-
-  <div>
-    <h3>Informacje o użytkowniku</h3>
-    <p><strong>Imię:</strong> {{ osoba.imie }}</p>
-    <p><strong>Nazwisko:</strong> {{ osoba.nazwisko }}</p>
-    <p><strong>Email:</strong> {{ osoba.email }}</p>
-    <p><strong>Data rejestracji:</strong> {{ osoba.data_rejestracji }}</p>
-  </div>
-
-  <div>
+    <div>
     {% if profil.avatar %}
       <img src="{{ profil.avatar.url }}" alt="Zdjęcie profilowe" style="width: 150px; height: 150px; border-radius: 50%;">
     {% else %}
@@ -24,9 +15,23 @@
         <button type="submit">Dodaj zdjęcie profilowe</button>
       </form>
     {% endif %}
+    </div>
+    <div class = 'profile-card'>
+        <h3>Informacje o użytkowniku</h3>
+    <p><strong>Imię:</strong> {{ osoba.imie }}</p>
+    <p><strong>Nazwisko:</strong> {{ osoba.nazwisko }}</p>
+    <p><strong>Email:</strong> {{ osoba.email }}</p>
+    <p><strong>Data rejestracji:</strong> {{ osoba.data_rejestracji }}</p>
     <p><strong>Telefon:</strong> {{ profil.telefon }}</p>
     <p><strong>Data urodzenia:</strong> {{ profil.data_urodzenia }}</p>
     <p><strong>Biografia:</strong> {{ profil.biografia }}</p>
   </div>
+ 
+ 
+ 
+    <form method="POST" action="{% url 'logout' %}">
+         {% csrf_token %}
+        <button type="submit" class="button">Wyloguj</button>
+    </form>
 
 {% endblock %}

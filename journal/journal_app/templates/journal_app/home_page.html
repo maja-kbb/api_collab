@@ -1,0 +1,33 @@
+{% extends "journal_app/base.html" %}
+{% load static%}
+
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+        <div class="menu">
+            <a href="{% url 'profil-user' %}" class="profile-link">Twój profil</a>
+        </div>
+       <div class="h1">
+         <h1>Twoje wpisy:</h1>
+       </div>
+       <p>
+        <a href="{% url 'dodaj-wpis' %}" class="button">Dodaj wpis</a>
+       </p>
+{% for wpis in wpisy %}
+
+<div class="wpis">
+    <h2>{{wpis.tytul}}</h2>
+    <p>{{wpis.data_utworzenia}}</p>
+    <p>{{wpis.tresc}}</p>
+
+</div>
+    {% if wpis.upl_img %}
+        <div class="wpis-image">
+            <img src="{{ wpis.upl_img.url }}" >
+        </div>
+    {% endif %}
+
+
+<hr>
+{% endfor %}
+{% endblock %}
