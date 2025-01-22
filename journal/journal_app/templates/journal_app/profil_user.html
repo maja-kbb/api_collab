@@ -1,0 +1,32 @@
+{% extends 'journal_app/base.html' %}
+{%load static%}
+
+
+{% block content %}
+  <h2>Profil użytkownika</h2>
+
+  <div>
+    <h3>Informacje o użytkowniku</h3>
+    <p><strong>Imię:</strong> {{ osoba.imie }}</p>
+    <p><strong>Nazwisko:</strong> {{ osoba.nazwisko }}</p>
+    <p><strong>Email:</strong> {{ osoba.email }}</p>
+    <p><strong>Data rejestracji:</strong> {{ osoba.data_rejestracji }}</p>
+  </div>
+
+  <div>
+    {% if profil.avatar %}
+      <img src="{{ profil.avatar.url }}" alt="Zdjęcie profilowe" style="width: 150px; height: 150px; border-radius: 50%;">
+    {% else %}
+      <p>Brak zdjęcia profilowego</p>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="avatar" accept="image/*">
+        <button type="submit">Dodaj zdjęcie profilowe</button>
+      </form>
+    {% endif %}
+    <p><strong>Telefon:</strong> {{ profil.telefon }}</p>
+    <p><strong>Data urodzenia:</strong> {{ profil.data_urodzenia }}</p>
+    <p><strong>Biografia:</strong> {{ profil.biografia }}</p>
+  </div>
+
+{% endblock %}

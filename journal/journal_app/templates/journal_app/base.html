@@ -3,11 +3,11 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
-        <link href="{% static "css/journal_app.css" %}" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/journal_app.css' %}">
     </head>
     <body>
         <div id="header" >
-            <h1>Pierwsza aplikacja Django.</h1>
+            <h1>Journal</h1>
         </div>
         <div id="content">
             {% block content %}

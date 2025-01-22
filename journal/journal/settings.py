@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,6 +27,9 @@ SECRET_KEY = 'django-insecure-ufv7es41fgp$)(53o)l@#-z&*fv_t1v!jx2)wzc$)*c$9+=q8^
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Application definition#
@@ -57,7 +61,7 @@ ROOT_URLCONF = 'journal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,7 +76,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'journal.wsgi.application'
 
-
+LOGIN_REDIRECT_URL = '/journal_app/profil/'
+LOGOUT_REDIRECT_URL = '/login/'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

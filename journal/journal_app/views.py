@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.generics import UpdateAPIView, DestroyAPIView, ListAPIView
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.decorators import permission_required, login_required
 from . import views
 
 @api_view(['GET'])
@@ -62,6 +62,13 @@ def osoba_filter(request, substring):
     return Response(serializer.data)
 
 
+@login_required
+def profil_user(request):
+    osoba = Osoba.objects.get(user=request.user)
+    profil = Profil.objects.get(osoba=osoba)
+    return render(request, 'journal_app/profil_user.html', {'osoba': osoba, 'profil': profil})
+
+
 
 def osoba_list_html(request):
     osoby = Osoba.objects.all()
@@ -80,6 +87,9 @@ def osoba_detail_html(request, id):
     return render(request,
                   "journal_app/osoba/detail.html",
                   {'osoba': osoba})
+
+
+
 
 
 

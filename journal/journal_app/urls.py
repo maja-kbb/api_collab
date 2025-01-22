@@ -1,4 +1,7 @@
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 from .views import OsobaUpdateView, OsobaDeleteView, ProtectedView
 
@@ -12,4 +15,8 @@ urlpatterns = [
     path('osoby/update/<int:pk>/', OsobaUpdateView.as_view(), name='osoba-update'),
     path('osoby/delete/<int:pk>/', OsobaDeleteView.as_view(), name='osoba-delete'),
     path('protected/', ProtectedView.as_view(), name='protected'),
-]
+    path('login/', auth_views.LoginView.as_view(template_name='journal_app/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name ='journal_app/logout.html'), name='logout'),
+    path('profil/', views.profil_user, name='profil-user'), 
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
