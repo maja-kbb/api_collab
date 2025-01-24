@@ -1,0 +1,15 @@
+{% extends 'journal_app/base.html' %}
+{% block content %}
+
+<div class="login-container">
+
+<h2 style = "text-align:center;">Rejestracja</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  
+    <button type="submit">Zarejestruj się</button>
+</form>
+
+</div>
+{% endblock %}
+

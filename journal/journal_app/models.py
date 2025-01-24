@@ -31,7 +31,7 @@ class Profil(models.Model):
     osoba = models.OneToOneField(Osoba, on_delete=models.CASCADE, related_name='profil') #do polaczenia z modelem osoba
     data_urodzenia = models.DateField(null=True, blank=True)
     telefon = models.CharField(max_length=15, null=True, blank=True)
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
     biografia = models.TextField(null=True, blank=True) #zeby mozna bylo jakis opis profilu sobie dodac
 
     def __str__(self):

@@ -19,8 +19,10 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name ='journal_app/logout.html'), name='logout'),
     path('profil/', views.profil_user, name='profil-user'), 
     path('home/', views.home_page, name='home-page'),
-    path('post/', views.dodaj_wpis, name='dodaj-wpis')
+    path('post/', views.dodaj_wpis, name='dodaj-wpis'),
+    path('register/', views.register, name='register'),
+    path('edytuj_profil/', views.edytuj_profil, name='edytuj-profil')
+            ] 
 
-] 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

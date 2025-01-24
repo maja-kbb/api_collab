@@ -3,7 +3,13 @@
 
 
 {% block content %}
-  <h2>Profil użytkownika</h2>
+  <a href="{% url 'edytuj-profil' %}" class="button edit-button">Edytuj profil</a>
+  <br>
+  <div class = "profile-header">
+  <h3>Profil użytkownika</h3>
+  </div>
+  <br>
+
     <div>
     {% if profil.avatar %}
       <img src="{{ profil.avatar.url }}" alt="Zdjęcie profilowe" style="width: 150px; height: 150px; border-radius: 50%;">
@@ -27,8 +33,8 @@
     <p><strong>Biografia:</strong> {{ profil.biografia }}</p>
   </div>
  
- 
- 
+   <br>
+
     <form method="POST" action="{% url 'logout' %}">
          {% csrf_token %}
         <button type="submit" class="button">Wyloguj</button>

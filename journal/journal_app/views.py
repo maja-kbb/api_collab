@@ -10,8 +10,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.generics import UpdateAPIView, DestroyAPIView, ListAPIView
 from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth import login
 from . import views
-from .forms import DodajWpis
+from .forms import DodajWpis, CustomUserCreationForm, ProfilForm
+from django.contrib import messages
 
 @api_view(['GET'])
 def osoba_list(request):
@@ -63,6 +65,42 @@ def osoba_filter(request, substring):
     return Response(serializer.data)
 
 
+
+
+
+
+
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()  
+            login(request, user)  
+            return redirect('home-page')  
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'journal_app/register.html', {'form': form})
+
+
+
+@login_required
+def edytuj_profil(request):
+    profil = Profil.objects.get(osoba__user=request.user)
+
+    if request.method == 'POST':
+        form = ProfilForm(request.POST, request.FILES, instance=profil)
+        if form.is_valid():
+            form.save()  
+            return redirect('profil-user')  
+    else:
+        form = ProfilForm(instance=profil)
+
+    return render(request, 'journal_app/edytuj_profil.html', {'form': form})
+
+
+
 @login_required
 def profil_user(request):
     osoba = Osoba.objects.get(user=request.user)
@@ -78,7 +116,7 @@ def home_page(request):
     return render(request, 'journal_app/home_page.html', {'osoba': osoba, 'profil':profil, 'wpisy':wpisy})
 
 
-
+@login_required
 def dodaj_wpis(request):
     if request.method == 'POST':
         form = DodajWpis(request.POST, request.FILES)
