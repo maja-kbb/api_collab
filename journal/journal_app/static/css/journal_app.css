@@ -13,6 +13,15 @@ body {
   flex-direction: column;
 }
 
+body.light-theme{
+  background-color: #d7a9e0;
+  color: rgb(30, 10, 29)
+}
+
+body.dark-theme{
+  background-color: #251029;
+  color: rgb(30, 10, 29);
+}
 .h1 {
   text-align: left !important; 
   margin-left: 0;   
@@ -45,6 +54,18 @@ header nav a {
 
 header nav a:hover {
   color: #cce5d0;
+}
+
+.filter-container {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.filter-container select {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 
@@ -161,6 +182,16 @@ header nav a:hover {
   background-color: #55266a; 
 }
 
+.menu {
+  display: flex;
+  gap: 1rem; 
+}
+
+
+
+
+
+
 
 .login-container form {
   display: flex;
@@ -225,10 +256,11 @@ header nav a:hover {
 .wpis-image {
   text-align: center;
   margin-top: 1rem;
+
 }
 
 .wpis-image img {
-  max-width: 100%; 
+  max-width: 20vw; 
   height: auto; 
   border-radius: 8px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 

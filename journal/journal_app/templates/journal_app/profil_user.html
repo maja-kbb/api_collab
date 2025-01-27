@@ -3,7 +3,10 @@
 
 
 {% block content %}
-  <a href="{% url 'edytuj-profil' %}" class="button edit-button">Edytuj profil</a>
+<div class="menu">
+  <a href="{% url 'edytuj-profil' %}" class="button">Edytuj profil</a>
+  <a href="{% url 'home-page' %}" class="button">Strona główna</a>
+</div>
   <br>
   <div class = "profile-header">
   <h3>Profil użytkownika</h3>
@@ -12,14 +15,9 @@
 
     <div>
     {% if profil.avatar %}
-      <img src="{{ profil.avatar.url }}" alt="Zdjęcie profilowe" style="width: 150px; height: 150px; border-radius: 50%;">
+      <img src="/journal_app{{ profil.avatar.url }}" alt="Zdjęcie profilowe" style="width: 150px; height: 150px; border-radius: 50%;">
     {% else %}
       <p>Brak zdjęcia profilowego</p>
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="avatar" accept="image/*">
-        <button type="submit">Dodaj zdjęcie profilowe</button>
-      </form>
     {% endif %}
     </div>
     <div class = 'profile-card'>

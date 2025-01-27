@@ -1,0 +1,17 @@
+{% extends 'journal_app/base.html' %}
+
+{% block content %}
+       <div class="menu">
+            <a href="{% url 'profil-user' %}" class="button">Twój profil</a>
+            <a href="{% url 'home-page' %}" class="button">Strona główna</a>
+       </div>
+<div class="profile-container">
+    <h1>Ustawienia</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">Zapisz</button>
+    </form>
+</div>
+{% endblock %}
+

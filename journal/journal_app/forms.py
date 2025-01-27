@@ -34,9 +34,22 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class ProfilForm(forms.ModelForm):
+    data_urodzenia = forms.DateField(required = False, widget=forms.DateInput(attrs={'placeholder': 'RRRR-MM-DD'}))
     class Meta:
         model = Profil
         fields = ['data_urodzenia', 'telefon', 'biografia', 'avatar']  
 
     def __init__(self, *args, **kwargs):
         super(ProfilForm, self).__init__(*args, **kwargs)
+
+
+from django import forms
+from .models import Ustawienia
+
+class UstawieniaForm(forms.ModelForm):
+    class Meta:
+        model = Ustawienia
+        fields = ['motyw_kolor']  # Pola do edycji
+        widgets = {
+            'motyw_kolor': forms.Select(attrs={'class': 'form-control'}),
+        }

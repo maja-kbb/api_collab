@@ -9,6 +9,16 @@ class OsobaSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=254)
     data_rejestracji = serializers.DateTimeField()
 
+    def validate_imie(self, value):
+        if not value.isalpha():
+            raise serializers.ValidationError("Pole 'imie' moze zawierac tylko litery")
+        return value
+    
+    def validate_nazwisko(self, value):
+        if not value.isalpha():
+            raise serializers.ValidationError("Pole 'nazwisko' moze zawierac tylko litery")
+        return value
+
     def create(self, validated_data):
         return Osoba.objects.create(**validated_data)
     
@@ -22,15 +32,7 @@ class OsobaSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-    def validate_imie(self, value):
-        if not value.isalpha():
-            raise serializers.ValidationError("Pole 'imie' moze zawierac tylko litery")
-        return value
-    
-    def validate_nazwisko(self, value):
-        if not value.isalpha():
-            raise serializers.ValidationError("Pole 'nazwisko' moze zawierac tylko litery")
-        return value
+
 
 
 
@@ -67,7 +69,9 @@ class ProfilSerializer(serializers.Serializer):
     avatar = serializers.ImageField()
     biografia = serializers.CharField()    
 
-
+    
+    
+    
     def create(self, validated_data):
         return Profil.objects.create(**validated_data)
 
@@ -80,7 +84,10 @@ class ProfilSerializer(serializers.Serializer):
         instance.save()
         return instance
 
-
+    #def validate_telefon(self, value):
+       # if not value.isdigit():
+        #   raise serializers.ValidationError("Pole 'telefon' moze zawierac tylko cyfry")
+        #return value
 
 class UstawieniaSerializer(serializers.Serializer):
     osoba = serializers.PrimaryKeyRelatedField(queryset=Osoba.objects.all())
@@ -88,9 +95,11 @@ class UstawieniaSerializer(serializers.Serializer):
   
 
     def create(self, validated_data):
-        return Ustawienia.objects.create(**validated_data)
+        osoba = self.context['request'].user.osoba
+        return Ustawienia.objects.create(osoba=osoba, **validated_data)
     
     def update(self, instance, validated_data):
         instance.osoba = validated_data.get('osoba', instance.osoba)
         instance.motyw_kolor = validated_data.get('motyw_kolor', instance.motyw_kolor)
         instance.save()
+        return instance

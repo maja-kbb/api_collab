@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{% static 'css/journal_app.css' %}">
         <title>Journal</title>
     </head>
-    <body>
+    <body class="{{ request.user.osoba.ustawienia.motyw_kolor }}-theme">
         <header class="header">
         
             <img src="{% static 'images/logo.png' %}" alt="Journal Logo" class="header-logo">
@@ -16,7 +16,7 @@
             {% endblock %}
         </div>
         <div id="sidebar">
-            <p>Panel boczny</p>
+            <p>JOURNAL</p>
         </div>
     </body>
 </html>

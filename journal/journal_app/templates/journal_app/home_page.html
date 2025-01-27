@@ -5,8 +5,22 @@
 
 {% block content %}
         <div class="menu">
-            <a href="{% url 'profil-user' %}" class="profile-link">Twój profil</a>
+            <a href="{% url 'profil-user' %}" class="button">Twój profil</a>
+            <a href="{% url 'ustawienia' %}" class="button">Ustawienia</a>
         </div>
+
+        <div class="filter-container">
+            <form method="get" action="{% url 'home-page' %}">
+                <label for="sort">Sortuj według:</label>
+                <select name="sort" id="sort" onchange="this.form.submit()">
+                    <option value="najnowsze" {% if sort_option == 'najnowsze' %}selected{% endif %}>Najnowsze</option>
+                    <option value="najstarsze" {% if sort_option == 'najstarsze' %}selected{% endif %}>Najstarsze</option>
+                    <option value="alfabetycznie" {% if sort_option == 'alfabetycznie' %}selected{% endif %}>Alfabetycznie</option>
+                    <option value="odwr_alfabetycznie" {% if sort_option == 'odwr_alfabetycznie' %}selected{% endif %}>Odwrócone alfabetycznie</option>
+                </select>
+            </form>
+        </div>
+
        <div class="h1">
          <h1>Twoje wpisy:</h1>
        </div>
@@ -23,7 +37,7 @@
 </div>
     {% if wpis.upl_img %}
         <div class="wpis-image">
-            <img src="{{ wpis.upl_img.url }}" >
+            <img src="/journal_app{{ wpis.upl_img.url }}" >
         </div>
     {% endif %}
 

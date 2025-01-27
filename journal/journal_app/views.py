@@ -9,10 +9,10 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.generics import UpdateAPIView, DestroyAPIView, ListAPIView
-from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.decorators import permission_required, login_required, user_passes_test
 from django.contrib.auth import login
 from . import views
-from .forms import DodajWpis, CustomUserCreationForm, ProfilForm
+from .forms import DodajWpis, CustomUserCreationForm, ProfilForm, UstawieniaForm
 from django.contrib import messages
 
 @api_view(['GET'])
@@ -88,7 +88,6 @@ def register(request):
 @login_required
 def edytuj_profil(request):
     profil = Profil.objects.get(osoba__user=request.user)
-
     if request.method == 'POST':
         form = ProfilForm(request.POST, request.FILES, instance=profil)
         if form.is_valid():
@@ -96,24 +95,74 @@ def edytuj_profil(request):
             return redirect('profil-user')  
     else:
         form = ProfilForm(instance=profil)
-
     return render(request, 'journal_app/edytuj_profil.html', {'form': form})
+
+
+
+
+@login_required
+def ustawienia(request):
+    ustawienia, created = Ustawienia.objects.get_or_create(
+        osoba=request.user.osoba,  
+        defaults={'motyw_kolor': 'light'} 
+    )
+
+    if request.method == "POST":
+        
+        form = UstawieniaForm(request.POST, instance=ustawienia)
+        if form.is_valid():
+            ustawienia = form.save(commit=False)
+            ustawienia.osoba = request.user.osoba
+            ustawienia.save()
+            return redirect('ustawienia')  # Przekierowanie po zapisaniu zmian
+    else:
+        form = UstawieniaForm(instance=ustawienia)
+
+    return render(request, 'journal_app/ustawienia.html', {'form': form})
+
+
 
 
 
 @login_required
 def profil_user(request):
     osoba = Osoba.objects.get(user=request.user)
-    profil = Profil.objects.get(osoba=osoba)
+    if request.user.is_staff:
+        profil = Profil.objects.all()
+    else:
+        profil = Profil.objects.get(osoba=osoba)
     return render(request, 'journal_app/profil_user.html', {'osoba': osoba, 'profil': profil})
+
+
 
 
 @login_required
 def home_page(request):
     osoba = Osoba.objects.get(user=request.user)
     profil = Profil.objects.get(osoba=osoba)
-    wpisy = Wpis.objects.filter(autor = osoba)
-    return render(request, 'journal_app/home_page.html', {'osoba': osoba, 'profil':profil, 'wpisy':wpisy})
+    
+    sort_option = request.GET.get('sort', 'najnowsze')
+    
+    if request.user.is_staff:
+        wpisy = Wpis.objects.all()
+    else:
+        wpisy = Wpis.objects.filter(autor=osoba)
+    
+    if sort_option == 'najnowsze':
+        wpisy = wpisy.order_by('-data_utworzenia')
+    elif sort_option == 'najstarsze':
+        wpisy = wpisy.order_by('data_utworzenia')
+    elif sort_option == 'alfabetycznie':
+        wpisy = wpisy.order_by('tytul')
+    elif sort_option == 'odwr_alfabetycznie':
+        wpisy = wpisy.order_by('-tytul')
+
+    return render(request, 'journal_app/home_page.html', {
+        'osoba': osoba,
+        'profil': profil,
+        'wpisy': wpisy,
+        'sort_option': sort_option
+    })
 
 
 @login_required
